@@ -87,12 +87,12 @@
     margin-bottom: 15px;
 }
 
-.estado-tag.pendiente {
+.estado-tag.en-proceso {
     background-color: #fef3c7;
     color: #92400e;
 }
 
-.estado-tag.aceptado {
+.estado-tag.completado {
     background-color: #d1fae5;
     color: #065f46;
 }
@@ -140,6 +140,42 @@
     align-items: center;
     color: #fff;
     margin-bottom: 20px;
+}
+
+
+/* === Adjuntos === */
+
+.adjunto-card {
+    margin-bottom: 20px;
+}
+
+.adjunto-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.adjunto-header h5 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+.btn-ver-pdf {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-ver-pdf:hover {
+    background-color: #1d4ed8;
 }
 
 

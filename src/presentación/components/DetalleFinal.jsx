@@ -91,40 +91,26 @@ const DetalleDocumento = ({ documento, onClose, onActualizarEstado }) => {
             <textarea type="text" value={fut.fundamentos || ""} readOnly />
           </div>
 
-          {/* === SECCIÓN: DOCUMENTOS ADJUNTOS === */}
-          <div className="adjuntos-section">
-            <h4>Documentos adjuntos</h4>
-
-            {Object.entries(documento)
-            // Filtra solo las propiedades con "Url" y que tengan valor
-            .filter(([key, value]) => key.toLowerCase().includes("url") && value)
-            .map(([key, url], index) => {
-              const nombreLimpio = key
-                .replace(/url/gi, "")
-                .replace(/([A-Z])/g, " $1")
-                .replace(/^./, (str) => str.toUpperCase())
-                .trim();
-
-              return (
-                <div key={index} className="adjunto-card">
-                  <div className="adjunto-header">
-                    <h5>{nombreLimpio}</h5>
-                    <button
-                      className="btn-ver-pdf"
-                      onClick={() => window.open(url, "_blank")}
-                    >
-                      Ver PDF
-                    </button>
-                  </div>
-
-                  <div className="adjunto-box">
-                    <iframe src={url} title={nombreLimpio}></iframe>
-                  </div>
-                </div>
-              );
-            })}
+          <div className="adjunto">
+            <h4>Vaucher</h4>
+            <div className="adjunto-box">
+              <iframe src={documento.vaucherUrl || documento.solicitudUrl}></iframe>
+            </div>
           </div>
 
+          <div className="adjunto">
+            <h4>Solicitud</h4>
+            <div className="adjunto-box">
+              <iframe src={documento.solicitudUrl}></iframe>
+            </div>
+          </div>
+
+          <div className="adjunto">
+            <h4>DNI Remitente</h4>
+            <div className="adjunto-box">
+              <iframe src={documento.dniApoderadoUrl}></iframe>
+            </div>
+          </div>
 
           <div className="asignacion">
             <h4># Asignación de Documento</h4>
@@ -137,16 +123,6 @@ const DetalleDocumento = ({ documento, onClose, onActualizarEstado }) => {
                 <option>Baja</option>
               </select>
             </div>
-          </div>
-
-          <div className="acciones">
-            <button
-              className="btn-rechazar"
-              onClick={() => setMostrarRechazo(true)}
-            >
-              Rechazar Documento
-            </button>
-            <button className="btn-aceptar">Aceptar Documento</button>
           </div>
         </div>
       </div>

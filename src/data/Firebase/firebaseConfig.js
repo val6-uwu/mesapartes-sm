@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -11,9 +12,9 @@ const firebaseConfig = {
     appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 if (!firebaseConfig.apiKey || !firebaseConfig.projectId) {
-    console.error("❌ Error: Firebase configuration is missing!");
-    console.error("📝 Make sure you have created a .env file with all required variables.");
-    console.error("📄 Check .env.example for reference.");
+    console.error("Error: Firebase configuration is missing!");
+    console.error("Make sure you have created a .env file with all required variables.");
+    console.error("Check .env.example for reference.");
     throw new Error(
         'Firebase configuration is incomplete. Please check your .env file.'
     );

@@ -2,25 +2,29 @@ import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import "../Styles/DashboardPrinc.css";
 import TarjetRes from "../pages/TarjetasResumen";
-import { FaEye, FaEllipsisH, FaFilter } from "react-icons/fa";
+import { FaEye, FaEllipsisH } from "react-icons/fa";
 import DetalleDocumento from "../components/DetalleDocumento";
 import ModalRechazo from "../components/ModalRechazo";
-
-// 🧩 Importamos las funciones del servicio
 import { listenTramites, updateTramite } from "../../core/services/tramitesService";
+import BarraBusqueda from "../components/BarraBusqueda";
 
 const DashboardPrinc = () => {
   const [documentos, setDocumentos] = useState([]);
+  const [documentosFiltrados, setDocumentosFiltrados] = useState([]);
   const [selectedDoc, setSelectedDoc] = useState(null);
   const [mostrarRechazo, setMostrarRechazo] = useState(false);
+  const [filtroEstado, setFiltroEstado] = useState("Todos");
 
-  // 🔥 Escucha cambios en Firestore en tiempo real
+  // 🔹 Cargar documentos desde Firestore
   useEffect(() => {
-    const unsubscribe = listenTramites(setDocumentos);
-    return () => unsubscribe();
-  }, []);
+  const unsubscribe = listenTramites((data) => {
+    setDocumentos(data);
+  });
+  return () => unsubscribe();
+}, []);
 
-  // 🔴 Rechazar documento (y actualizar Firestore)
+
+  // 🔹 Rechazar documento
   const handleConfirmar = async (observacionTexto) => {
     if (selectedDoc) {
       await updateTramite(selectedDoc.id, {
@@ -32,35 +36,45 @@ const DashboardPrinc = () => {
     setSelectedDoc(null);
   };
 
+  // 🔹 Abrir modal de rechazo
   const handleAbrirRechazo = (doc) => {
     setSelectedDoc(doc);
-    setMostrarRechazo(true);
+    setMostrarRechazo(doc);
   };
+
+  // 🔹 Filtrar por estado (aplicado sobre los documentos filtrados por búsqueda)
+  const documentosVisibles = documentosFiltrados.filter((doc) => {
+    if (filtroEstado === "Todos") return true;
+    if (filtroEstado === "En proceso") return doc.estado === "En proceso";
+    return doc.estado === filtroEstado;
+  });
 
   return (
     <div className="dashboard-container">
       <Header />
 
       <main className="dashboard-content">
-        <TarjetRes />
+        {/* Tarjetas resumen dinámicas */}
+        <TarjetRes documentos={documentos} />
 
+        {/* Barra de búsqueda y filtro por estado */}
         <section className="filters-section">
-          <div className="search-container">
-            <input type="text" placeholder="Busca por código, fecha ..." />
-            <button className="filter-btn">
-              <FaFilter />
-            </button>
-          </div>
-          <select className="status-filter">
-            <option>Todos los estados</option>
+          <BarraBusqueda documentos={documentos} onFiltrar={setDocumentosFiltrados} />
+
+          <select
+            className="status-filter"
+            value={filtroEstado}
+            onChange={(e) => setFiltroEstado(e.target.value)}
+          >
+            <option value="Todos">Todos los estados</option>
+            <option value="En proceso">En proceso</option>
+            <option value="Completado">Completado</option>
+            <option value="Rechazado">Rechazado</option>
           </select>
         </section>
 
+        {/* Tabla de documentos */}
         <section className="table-section">
-          <div className="table-header">
-            <p>{documentos.length} documentos</p>
-          </div>
-
           <table className="doc-table">
             <thead>
               <tr>
@@ -74,7 +88,7 @@ const DashboardPrinc = () => {
             </thead>
 
             <tbody>
-              {documentos.map((doc) => {
+              {documentosVisibles.map((doc) => {
                 const fut = doc.datosFUT || {};
                 return (
                   <tr key={doc.id}>
@@ -87,10 +101,12 @@ const DashboardPrinc = () => {
                     <td>
                       <span
                         className={`status ${
-                          (doc.estado || "Pendiente").toLowerCase()
+                          (doc.estado || "En proceso")
+                            .toLowerCase()
+                            .replace(/\s+/g, "-")
                         }`}
                       >
-                        {doc.estado || "Pendiente"}
+                        {doc.estado || "En proceso"}
                       </span>
                     </td>
                     <td className="actions">
