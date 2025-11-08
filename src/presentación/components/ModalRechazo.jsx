@@ -11,7 +11,6 @@ const ModalRechazo = ({ documento, onClose, onConfirm }) => {
         {/* Encabezado */}
         <div className="modal-header">
           <div className="header-left">
-            <span className="icono-alerta">⚠️</span>
             <h2>Rechazar Documento</h2>
           </div>
           <button className="close-btn" onClick={onClose}>
@@ -23,12 +22,11 @@ const ModalRechazo = ({ documento, onClose, onConfirm }) => {
         <p className="mensaje">
           Está a punto de rechazar el documento{" "}
           <strong>{documento.codigo}</strong> de{" "}
-          <strong>{documento.nombre}</strong>. Por favor, indique el motivo del
-          rechazo.
+          <strong>{documento.nombres || ""} {documento.apellidos || ""}</strong>.{""} Por favor, indique el motivo del rechazo.
         </p>
 
         {/* Campo de observación */}
-        <label>Observación*</label>
+        <label>Observación</label>
         <textarea
           placeholder="Ej: Documentación incompleta, falta documentación ..."
           value={observacion}

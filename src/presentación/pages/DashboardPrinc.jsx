@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import "../Styles/DashboardPrinc.css";
-import TarjetRes from "../pages/TarjetasResumen";
+import TarjetRes from "../components/TarjetasResumen";
 import { FaEye, FaEllipsisH } from "react-icons/fa";
 import DetalleDocumento from "../components/DetalleDocumento";
 import ModalRechazo from "../components/ModalRechazo";
@@ -45,7 +45,7 @@ const DashboardPrinc = () => {
   // 🔹 Filtrar por estado (aplicado sobre los documentos filtrados por búsqueda)
   const documentosVisibles = documentosFiltrados.filter((doc) => {
     if (filtroEstado === "Todos") return true;
-    if (filtroEstado === "En proceso") return doc.estado === "En proceso";
+    if (filtroEstado === "Pendiente") return doc.estado === "Pendiente";
     return doc.estado === filtroEstado;
   });
 
@@ -67,8 +67,8 @@ const DashboardPrinc = () => {
             onChange={(e) => setFiltroEstado(e.target.value)}
           >
             <option value="Todos">Todos los estados</option>
-            <option value="En proceso">En proceso</option>
-            <option value="Completado">Completado</option>
+            <option value="Pendiente">Pendiente</option>
+            <option value="Aceptado">Aceptado</option>
             <option value="Rechazado">Rechazado</option>
           </select>
         </section>
@@ -92,25 +92,30 @@ const DashboardPrinc = () => {
                 const fut = doc.datosFUT || {};
                 return (
                   <tr key={doc.id}>
-                    <td>{doc.uid || "—"}</td>
+                    <td>SM-{doc.id || "—"}</td>
                     <td>{doc.tipoTramite || "—"}</td>
                     <td>{fut.fecha || "—"}</td>
                     <td>
-                      <span className="tag alta">Alta</span>
+                      <span className={`tag ${(doc.prioridad || "Asignar")
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")
+                      }`}
+                      >
+                        {doc.prioridad || "Asignar"}</span>
                     </td>
                     <td>
                       <span
                         className={`status ${
-                          (doc.estado || "En proceso")
+                          (doc.estado || "Pendiente")
                             .toLowerCase()
                             .replace(/\s+/g, "-")
                         }`}
                       >
-                        {doc.estado || "En proceso"}
+                        {doc.estado || "Pendiente"}
                       </span>
                     </td>
                     <td className="actions">
-                      {doc.estado !== "Rechazado" && (
+                      {doc.estado !== "Rechazado" && doc.estado !=="Aceptado" && (
                         <button
                           className="view-btn"
                           onClick={() => setSelectedDoc(doc)}

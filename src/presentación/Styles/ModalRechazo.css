@@ -1,92 +1,119 @@
+/* === ModalRechazo.css === */
+
+
+/* Fondo oscuro semitransparente */
+
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.45);
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     z-index: 1000;
 }
 
+
+/* Caja principal */
+
 .modal-rechazo {
     background: #fff;
+    width: 480px;
+    padding: 2rem;
     border-radius: 12px;
-    width: 440px;
-    padding: 24px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    font-family: "Inter", sans-serif;
-    color: #333;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    animation: fadeIn 0.3s ease-in-out;
+    position: relative;
 }
 
 
-/* Cabecera */
+/* Encabezado */
 
 .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 2px solid #f2f2f2;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.2rem;
 }
 
-.header-left {
+.header-left h2 {
+    font-size: 1.4rem;
+    color: #d9534f;
+    /* rojo de advertencia */
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 0.5rem;
 }
 
-.icono-alerta {
-    color: #e24b4b;
-    font-size: 1.6rem;
-}
 
-.modal-header h2 {
-    font-size: 1.2rem;
-    font-weight: 600;
-}
+/* Botón cerrar (X) */
 
 .close-btn {
     background: none;
     border: none;
     font-size: 1.3rem;
+    color: #555;
     cursor: pointer;
-    color: #777;
+    transition: all 0.2s ease-in-out;
+}
+
+.close-btn:hover {
+    color: #d9534f;
 }
 
 
-/* Contenido */
+/* Texto descriptivo */
 
 .mensaje {
-    margin: 16px 0 10px;
-    font-size: 0.9rem;
+    color: #333;
+    font-size: 1rem;
+    margin-bottom: 1rem;
     line-height: 1.4;
 }
 
-.modal-rechazo label {
+
+/* Etiqueta */
+
+label {
     display: block;
+    margin-bottom: 0.5rem;
+    color: #444;
     font-weight: 600;
-    font-size: 0.9rem;
-    margin-top: 10px;
 }
 
-.modal-rechazo textarea {
+
+/* Área de texto */
+
+textarea {
     width: 100%;
-    min-height: 70px;
+    min-height: 100px;
     resize: none;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    padding: 8px;
-    font-size: 0.9rem;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    padding: 0.7rem;
+    font-size: 0.95rem;
     color: #333;
-    background-color: #f9f9f9;
-    margin-top: 4px;
+    transition: border-color 0.3s ease;
 }
+
+textarea:focus {
+    outline: none;
+    border-color: #d9534f;
+}
+
+
+/* Nota informativa */
 
 .nota {
-    font-size: 0.8rem;
-    color: #666;
-    margin: 10px 0 18px;
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 0.7rem;
+    margin-bottom: 1.2rem;
 }
 
 
@@ -95,28 +122,54 @@
 .acciones-modal {
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
+    gap: 1rem;
 }
+
+
+/* Botón cancelar */
 
 .cancelar-btn {
-    background: #fff;
-    border: 1px solid #ccc;
-    padding: 8px 16px;
-    border-radius: 6px;
+    background-color: #ccc;
+    border: none;
+    color: #333;
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px;
     cursor: pointer;
-    font-weight: 500;
+    transition: all 0.25s ease-in-out;
 }
 
+.cancelar-btn:hover {
+    background-color: #b0b0b0;
+}
+
+
+/* Botón confirmar (rojo) */
+
 .confirmar-btn {
-    background: #e24b4b;
-    color: #fff;
+    background-color: #d9534f;
     border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
+    color: white;
+    padding: 0.7rem 1.4rem;
+    border-radius: 8px;
     cursor: pointer;
+    transition: all 0.25s ease-in-out;
     font-weight: 500;
 }
 
 .confirmar-btn:hover {
-    background: #cc3f3f;
+    background-color: #b8413f;
+}
+
+
+/* Animación de entrada */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

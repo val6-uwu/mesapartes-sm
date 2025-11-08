@@ -2,27 +2,51 @@ import React, { useState } from "react";
 import {useNavigate} from "react-router-dom"
 import { signInWithEmailAndPassword } from "firebase/auth";
 import {auth} from "../../data/Firebase/firebaseConfig"
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../data/Firebase/firebaseConfig";
 import "../Styles/login.css"
 import logo from "../../assets/logo-san-miguel.jpg"
 import colegio from "../../assets/Colegio-San-Miguel-.jpg"
 
-const Login = () => {
-    const navigate = useNavigate();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
+    const Login = () => {
+      const navigate = useNavigate();
+      const [email, setEmail] = useState("");
+      const [password, setPassword] = useState("");
+      const [error, setError] = useState("");
+      const [loading, setLoading] = useState(false);
 
-    const handleSubmit = async (e) => {
+      const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
 
     try {
       // Intentar iniciar sesión con Firebase Auth
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
-      // Si es correcto, redirigir al Dashboard
+      // Obtener el rol desde Firestore
+      const userDocRef = doc(db, "usuarios", user.uid);
+      const userSnap = await getDoc(userDocRef);
+
+      if (!userSnap.exists()) {
+        setError("No tienes permiso para acceder al sistema.");
+        await auth.signOut();
+        setLoading(false);
+        return;
+      }
+
+      const userData = userSnap.data();
+
+      // Verificar el rol
+      if (userData.rol !== "admin") {
+        setError("Acceso denegado. Este usuario no pertenece a la mesa de partes.");
+        await auth.signOut();
+        setLoading(false);
+        return;
+      }
+
+      // ✅ Si el rol es válido, permitir acceso
       navigate("/DashboardPrinc");
 
     } catch (err) {
@@ -39,7 +63,8 @@ const Login = () => {
     } finally {
       setLoading(false);
     }
-  };
+    };
+
 
     return(
         <div className="login-page">

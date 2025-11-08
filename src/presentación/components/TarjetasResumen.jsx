@@ -6,8 +6,8 @@ const TarjetRes = ({ documentos = [] }) => {
   // ✅ useMemo evita recalcular en cada render
   const { total, pendientes, aceptados, rechazados } = useMemo(() => {
     const total = documentos.length;
-    const pendientes = documentos.filter(doc => doc.estado === "En proceso" || !doc.estado).length;
-    const aceptados = documentos.filter(doc => doc.estado === "Completado" || doc.estado === "Aprobado").length;
+    const pendientes = documentos.filter(doc => doc.estado === "Pendiente" || !doc.estado).length;
+    const aceptados = documentos.filter(doc => doc.estado === "Aceptado" || doc.estado === "Aprobado").length;
     const rechazados = documentos.filter(doc => doc.estado === "Rechazado").length;
 
     return { total, pendientes, aceptados, rechazados };

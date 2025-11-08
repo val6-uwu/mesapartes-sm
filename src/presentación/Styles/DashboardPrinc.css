@@ -211,14 +211,24 @@
     text-transform: capitalize;
 }
 
+.tag.asignar {
+    background-color: #d3d3d37f;
+    color: #7b7b7b;
+}
+
 .tag.alta {
     background-color: #ffe5e5;
     color: #c53030;
 }
 
+.tag.media {
+    background-color: #e8f3ff;
+    color: #469fff;
+}
+
 .tag.baja {
     background-color: #e6f6e6;
-    color: #276749;
+    color: #282767;
 }
 
 .status {
@@ -229,12 +239,12 @@
     text-transform: capitalize;
 }
 
-.status.en-proceso {
+.status.pendiente {
     background-color: #fff1d6;
     color: #92400e;
 }
 
-.status.completado {
+.status.aceptado {
     background-color: #e6f4ff;
     color: #007bff;
 }

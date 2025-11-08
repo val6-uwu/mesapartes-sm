@@ -8,7 +8,6 @@ const BarraBusqueda = ({ documentos = [], onFiltrar = () => {} }) => {
   useEffect(() => {
     let filtrados = documentos;
 
-    // 🔍 Filtro por código
     if (busqueda.trim()) {
       const texto = busqueda.toLowerCase();
       filtrados = filtrados.filter((doc) => {
@@ -17,7 +16,6 @@ const BarraBusqueda = ({ documentos = [], onFiltrar = () => {} }) => {
       });
     }
 
-    // 📅 Filtro por fecha
     if (fechaFiltro) {
       filtrados = filtrados.filter((doc) => {
         const fut = doc.datosFUT || {};
