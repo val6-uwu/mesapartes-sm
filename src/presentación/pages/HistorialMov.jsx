@@ -108,7 +108,15 @@ const HistorialMov = () => {
                   </td>
                   <td>{mov.usuario || "—"}</td>
                   <td>{mov.accion || "—"}</td>
-                  <td>{mov.areaAsignada || "—"}</td>
+                  <td>
+                    {mov.areaAsignada
+                      ? `${mov.areaAsignada.area || "—"}${
+                          mov.areaAsignada.eArea
+                            ? ` (${mov.areaAsignada.eArea})`
+                            : ""
+                        }`
+                      : "—"}
+                  </td>
                   <td>{mov.prioridad || "—"}</td>
                   <td>{mov.observaciones || "—"}</td>
                 </tr>

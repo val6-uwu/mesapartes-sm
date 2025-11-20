@@ -3,54 +3,32 @@ import { FaFilter } from "react-icons/fa";
 
 const BarraBusqueda = ({ documentos = [], onFiltrar = () => {} }) => {
   const [busqueda, setBusqueda] = useState("");
-  const [fechaFiltro, setFechaFiltro] = useState("");
 
   useEffect(() => {
-    let filtrados = documentos;
-
-    if (busqueda.trim()) {
-      const texto = busqueda.toLowerCase();
-      filtrados = filtrados.filter((doc) => {
-        const codigo = (doc.uid || "").toLowerCase();
-        return codigo.includes(texto);
-      });
+    // Si no hay texto → devolver TODOS los documentos
+    if (!busqueda.trim()) {
+      onFiltrar(documentos); 
+      return;
     }
 
-    if (fechaFiltro) {
-      filtrados = filtrados.filter((doc) => {
-        const fut = doc.datosFUT || {};
-        const fechaTexto = fut.fecha || "";
+    const texto = busqueda.toLowerCase();
 
-        // Convertir "06/11/2025" → "2025-11-06"
-        const partes = fechaTexto.split("/");
-        if (partes.length === 3) {
-          const fechaNormalizada = `${partes[2]}-${partes[1]}-${partes[0]}`;
-          return fechaNormalizada === fechaFiltro;
-        }
-        return false;
-      });
-    }
+    const filtrados = documentos.filter((doc) => {
+      const codigo = (doc.id || "").toLowerCase();
+      return codigo.includes(texto);
+    });
 
     onFiltrar(filtrados);
-  }, [busqueda, fechaFiltro, documentos]);
+  }, [busqueda, documentos]); // ← documentos sí puede cambiar por el filtro de tiempo
 
   return (
-    <div className="search-container">
       <input
+        className="barra-busqueda"
         type="text"
         placeholder="Busca por código..."
         value={busqueda}
         onChange={(e) => setBusqueda(e.target.value)}
       />
-      <input
-        type="date"
-        value={fechaFiltro}
-        onChange={(e) => setFechaFiltro(e.target.value)}
-      />
-      <button className="filter-btn">
-        <FaFilter />
-      </button>
-    </div>
   );
 };
 

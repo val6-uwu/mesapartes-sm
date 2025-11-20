@@ -239,7 +239,7 @@
 }
 
 .btn-aceptar {
-    background-color: #0a7b00;
+    background-color: hsl(115, 100%, 24%);
 }
 
 .btn-rechazar:hover {

@@ -36,30 +36,39 @@ const Login = () => {
       }
 
       const userData = userSnap.data();
+      const userRole = userData.rol;
 
-      // 🔹 Verificar el rol
-      if (userData.rol !== "admin") {
-        setError("Acceso denegado. Este usuario no pertenece a la mesa de partes.");
-        await auth.signOut();
-        setLoading(false);
-        return;
-      }
-
-      // ✅ Registrar inicio de sesión en Firestore (colección "historial")
+      // ✅ Registrar inicio de sesión en Firestore
       await addDoc(collection(db, "historial"), {
         accion: "inicio_sesion",
         usuario: user.email || "Usuario desconocido",
+        rol: userRole,
         fecha: serverTimestamp(),
         tramite: null,
         estado: null,
         prioridad: null,
         areaAsignada: null,
         expediente: null,
-        observaciones: "El usuario inició sesión correctamente",
+        observaciones: `Usuario con rol ${userRole} inició sesión`,
       });
 
-      // ✅ Si el rol es válido, permitir acceso
-      navigate("/DashboardPrinc", { replace: true });
+      // 🔹 Redirigir según el rol
+      switch (userRole) {
+        case "admin":
+          navigate("/DashboardPrinc", { replace: true });
+          break;
+        case "secretaria":
+          navigate("/dashboard-secretaria", { replace: true });
+          break;
+        case "subdireccion":
+          navigate("/dashboard-subdireccion", { replace: true });
+          break;
+        default:
+          setError("Rol no reconocido. Contacta al administrador.");
+          await auth.signOut();
+          setLoading(false);
+          return;
+      }
 
     } catch (err) {
       console.error("Error en login:", err.code);

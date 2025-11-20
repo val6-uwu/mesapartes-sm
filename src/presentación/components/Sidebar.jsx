@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth, db } from "../../data/Firebase/firebaseConfig";
 import { signOut } from "firebase/auth";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import logo from "../../assets/logo-san-miguel.jpg"
 
 const Sidebar = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
@@ -44,8 +45,13 @@ const Sidebar = ({ isOpen, onClose }) => {
   return (
     <div className={`sidebar ${isOpen ? "open" : ""}`}>
       <div className="sidebar-header">
-        <h2>Menú</h2>
-        <FaTimes className="close-icon" onClick={onClose} />
+        <div className="Logo">
+          <img src={logo} alt="Logo San Miguel" className="logo" />
+        </div>
+        <div className="Logo-nombre">
+          <h3>Mesa de Partes - San Miguel</h3>
+          <FaTimes className="close-icon" onClick={onClose} />
+        </div>
       </div>
       <ul className="sidebar-menu">
         <li><Link to="/DashboardPrinc" onClick={onClose}>Inicio</Link></li>

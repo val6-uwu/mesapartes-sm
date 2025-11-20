@@ -19,6 +19,10 @@
     justify-content: space-between;
 }
 
+.header-content p {
+    color: white;
+}
+
 .header-logo {
     width: 60px;
     height: auto;

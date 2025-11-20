@@ -1,0 +1,367 @@
+/* TÍTULO */
+
+.page-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #1a1a1a;
+}
+
+
+/* ---------- TARJETAS DE RESUMEN ---------- */
+
+.summary-cards {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    flex: 1;
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+.card-info p {
+    font-size: 0.9rem;
+    color: #6c6c6c;
+    margin-bottom: 0.3rem;
+}
+
+.card-info h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #161616;
+}
+
+
+/* ---------- FILTRO ---------- */
+
+.filters-section {
+    margin-bottom: 1.5rem;
+}
+
+.status-filter {
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #cdcdcd;
+    background: #fff;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.status-filter:hover {
+    border-color: #1f7ae0;
+}
+
+
+/* ---------- TABLA ---------- */
+
+.table-section {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.doc-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.doc-table thead {
+    background: #f0f4fa;
+}
+
+.doc-table th {
+    padding: 0.9rem;
+    text-align: left;
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: 600;
+}
+
+.doc-table td {
+    padding: 0.9rem;
+    font-size: 0.9rem;
+    color: #333;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.doc-table tr:hover {
+    background: #f8fbff;
+}
+
+
+/* Expediente en gris claro */
+
+.exp {
+    font-size: 0.8rem;
+    color: #777;
+    margin-top: 3px;
+}
+
+
+/* ---------- ETIQUETAS DE PRIORIDAD ---------- */
+
+.tag {
+    padding: 5px 10px;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.tag.alta {
+    background-color: #ffe5e5;
+    color: #c53030;
+}
+
+.tag.media {
+    background-color: #e8f3ff;
+    color: #469fff;
+}
+
+.tag.baja {
+    background-color: #e6f6e6;
+    color: #282767;
+}
+
+
+/* ---------- ESTADOS ---------- */
+
+.status {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.status.pendiente {
+    background-color: #fff1d6;
+    color: #92400e;
+}
+
+.status.completado {
+    background-color: #e6f4ff;
+    color: #007bff;
+}
+
+
+/* ---------- ACCIONES ---------- */
+
+.actions {
+    align-items: center;
+    gap: 0.5rem;
+}
+
+
+/* BOTÓN VER */
+
+.btn-ver {
+    padding: 6px 14px;
+    background: #1f7ae0;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.25s ease;
+}
+
+.btn-ver:hover {
+    background: #1763b8;
+}
+
+
+/* BOTÓN 3 PUNTOS */
+
+.menu-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: background 0.2s ease;
+}
+
+.menu-btn:hover {
+    background: #eef4ff;
+}
+
+.menu-icon {
+    font-size: 1.2rem;
+    color: #444;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+    .summary-cards {
+        flex-direction: column;
+    }
+    .doc-table th,
+    .doc-table td {
+        font-size: 0.8rem;
+    }
+    .btn-ver {
+        padding: 5px 10px;
+    }
+}
+
+
+/* CONTENEDOR DE TODOS LOS FILTROS */
+
+.filters-section {
+    margin: 20px 0;
+    padding: 18px;
+    background: #ffffff;
+    border-radius: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-end;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+
+/* GRUPO DE FECHAS */
+
+.date-filters {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+
+/* INPUT FECHA */
+
+.date-filters input[type="date"] {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #d9d9d9;
+    font-size: 14px;
+    cursor: pointer;
+    background: #fafafa;
+    transition: all 0.2s ease;
+}
+
+.date-filters input[type="date"]:hover {
+    background: #f1f1f1;
+}
+
+.date-filters input[type="date"]:focus {
+    border-color: #007bff;
+    background: #ffffff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(30, 120, 255, 0.2);
+}
+
+
+/* BOTÓN APLICAR */
+
+.btn-aplicar {
+    padding: 10px 18px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    margin-bottom: 17px;
+}
+
+.btn-aplicar:hover {
+    background: #0066d4;
+}
+
+
+/* BOTÓN LIMPIAR */
+
+.btn-limpiar {
+    padding: 10px 18px;
+    background: #f0f0f0;
+    color: #333;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    margin-bottom: 17px;
+}
+
+.btn-limpiar:hover {
+    background: #e4e4e4;
+}
+
+
+/* SELECT DEL ESTADO */
+
+.status-filter {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #d9d9d9;
+    background: #fafafa;
+    font-size: 14px;
+    min-width: 180px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.status-filter:hover {
+    background: #f1f1f1;
+}
+
+.status-filter:focus {
+    border-color: #007bff;
+    background: #ffffff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(30, 120, 255, 0.2);
+}
+
+.btn-tres-puntos {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 22px;
+    font-weight: bold;
+    border-radius: 4px;
+    padding: 3px;
+}
+
+.btn-tres-puntos:hover {
+    background: rgb(185, 185, 185);
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+    .filters-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .date-filters {
+        flex-direction: column;
+        width: 100%;
+    }
+    .status-filter {
+        width: 100%;
+    }
+    .btn-aplicar,
+    .btn-limpiar {
+        width: 100%;
+    }
+}

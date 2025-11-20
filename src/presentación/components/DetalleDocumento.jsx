@@ -9,6 +9,7 @@ import {
   FaUserCircle,
   FaMapMarkerAlt,
 } from "react-icons/fa";
+
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../data/Firebase/firebaseConfig";
 import ModalRechazo from "./ModalRechazo";
@@ -24,8 +25,8 @@ const DetalleDocumento = ({ documento, onClose, onActualizarEstado }) => {
 
   const fut = documento.datosFUT || {};
 
-  // ✅ Guardar área asignada
-  const handleGuardarArea = async (areaSeleccionada) => {
+  // ✅ GUARDAR ÁREA ASIGNADA — CORREGIDO
+  const handleGuardarArea = async ({ area, eArea }) => {
     if (!nExpediente || !prioridad) {
       alert("Por favor ingrese el N° de expediente y seleccione una prioridad antes de asignar un área.");
       return;
@@ -33,11 +34,15 @@ const DetalleDocumento = ({ documento, onClose, onActualizarEstado }) => {
 
     try {
       const docRef = doc(db, "tramites", documento.id);
+
       await updateDoc(docRef, {
         estado: "Aceptado",
         nExpediente,
         prioridad,
-        areaAsignada: areaSeleccionada,
+        areaAsignada: {
+          area,
+          eArea
+        },
         fechaAsignacion: new Date(),
       });
 
@@ -46,25 +51,26 @@ const DetalleDocumento = ({ documento, onClose, onActualizarEstado }) => {
         estado: "Aceptado",
         nExpediente,
         prioridad,
-        areaAsignada: areaSeleccionada,
+        areaAsignada: { area, eArea },
       };
 
       if (onActualizarEstado) {
         onActualizarEstado(
           docActualizado,
           "asignar_area",
-          `Documento SM-${documento.id} asignado al área ${areaSeleccionada}`
+          `Documento SM-${documento.id} asignado al área ${area}`
         );
       }
 
       setMostrarAsignar(false);
       onClose();
+
     } catch (error) {
       console.error("❌ Error al asignar el área:", error);
     }
   };
 
-  // ✅ Rechazar documento
+  // ❌ RECHAZAR DOCUMENTO (no cambia)
   const handleRechazar = async (observacion) => {
     try {
       const docRef = doc(db, "tramites", documento.id);
@@ -105,6 +111,8 @@ const DetalleDocumento = ({ documento, onClose, onActualizarEstado }) => {
         </div>
 
         <div className="modal-content">
+          
+          {/* INFORMACIÓN DEL FUT */}
           <div className="doc-info">
             <div className="info-box">
               <p><FaFileAlt /> <strong>Código:</strong> {documento.uid}</p>
@@ -135,6 +143,7 @@ const DetalleDocumento = ({ documento, onClose, onActualizarEstado }) => {
             <textarea value={fut.fundamentos || ""} readOnly />
           </div>
 
+          {/* ADJUNTOS */}
           <div className="adjuntos-section">
             <h4>Documentos adjuntos</h4>
             {Object.entries(documento)
@@ -145,11 +154,14 @@ const DetalleDocumento = ({ documento, onClose, onActualizarEstado }) => {
                   .replace(/([A-Z])/g, " $1")
                   .replace(/^./, (str) => str.toUpperCase())
                   .trim();
+
                 return (
                   <div key={index} className="adjunto-card">
                     <div className="adjunto-header">
                       <h5>{nombreLimpio}</h5>
-                      <button className="btn-ver-pdf" onClick={() => window.open(url, "_blank")}>Ver PDF</button>
+                      <button className="btn-ver-pdf" onClick={() => window.open(url, "_blank")}>
+                        Ver PDF
+                      </button>
                     </div>
                     <div className="adjunto-box">
                       <iframe src={url} title={nombreLimpio}></iframe>
@@ -159,16 +171,17 @@ const DetalleDocumento = ({ documento, onClose, onActualizarEstado }) => {
               })}
           </div>
 
+          {/* ASIGNACIÓN */}
           <div className="asignacion">
             <h4># Asignación de Documento</h4>
             <div className="asignacion-box">
-              <input 
-                type="number" 
+              <input
+                type="number"
                 placeholder="N° de expediente"
                 value={nExpediente}
                 onChange={(e) => setNExpediente(e.target.value)}
               />
-              <select 
+              <select
                 value={prioridad}
                 onChange={(e) => setPrioridad(e.target.value)}
               >

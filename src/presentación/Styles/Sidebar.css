@@ -19,7 +19,6 @@
 }
 
 .sidebar-header {
-    display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
@@ -36,7 +35,13 @@
 }
 
 .sidebar-menu li {
-    margin: 15px 0;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.sidebar-menu li:hover {
+    background-color: #310000;
 }
 
 .sidebar-menu a {
@@ -48,4 +53,33 @@
 
 .sidebar-menu a:hover {
     color: #00aaff;
+}
+
+.Logo img {
+    width: 15rem;
+}
+
+.Logo-nombre {
+    display: flex;
+}
+
+.Logo-nombre h3 {
+    color: white;
+}
+
+.logout-btn {
+    margin: 10px;
+    font-size: 16px;
+    color: white;
+    border: none;
+    background-color: #4d000000;
+}
+
+.logout-btn:hover {
+    background-color: #310000;
+}
+
+.logout-section:hover {
+    background-color: #310000;
+    border-radius: 5px;
 }
