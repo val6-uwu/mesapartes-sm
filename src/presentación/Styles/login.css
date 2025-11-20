@@ -90,6 +90,11 @@
     margin-bottom: 5px;
     font-size: 22px;
     font-weight: 700;
+    color: white;
+}
+
+.login-form-box p {
+    color: white;
 }
 
 .subtitle {
@@ -109,7 +114,7 @@
 label {
     text-align: left;
     font-size: 13px;
-    color: #ddd;
+    color: #ffffff;
     margin-bottom: 5px;
 }
 
